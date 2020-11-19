@@ -1,6 +1,7 @@
 package inventory
 
 import (
+	"context"
 	"fmt"
 	"net/url"
 	"test2/http"
@@ -25,17 +26,17 @@ type Client struct {
 	Client *http.Client
 }
 
-func (c *Client) GetItems() ([]Inventory, error) {
+func (c *Client) GetItems(ctx context.Context) ([]Inventory, error) {
 	var items []Inventory
 	path := fmt.Sprintf("%s/inventory", c.Url.String())
-	err := c.Client.Get(path, &items)
+	err := c.Client.Get(ctx, path, &items)
 	return items, err
 
 }
 
-func (c *Client) GetItem(id int) (Inventory, error) {
+func (c *Client) GetItem(ctx context.Context, id int) (Inventory, error) {
 	var item Inventory
 	path := fmt.Sprintf("%s/inventory/%d", c.Url.String(), id)
-	err := c.Client.Get(path, &item)
+	err := c.Client.Get(ctx, path, &item)
 	return item, err
 }

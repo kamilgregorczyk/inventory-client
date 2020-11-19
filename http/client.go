@@ -1,6 +1,7 @@
 package http
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -14,16 +15,16 @@ type Config struct {
 }
 
 type Client struct {
-	http *http.Client
+	client *http.Client
 }
 
 func New(config Config) *Client {
-	return &Client{http: &http.Client{Timeout: config.Timeout},
+	return &Client{client: &http.Client{Timeout: config.Timeout},
 	}
 }
 
-func (c *Client) Get(url string, model interface{}) error {
-	response, err := c.http.Get(url)
+func (c *Client) Get(ctx context.Context, url string, model interface{}) error {
+	response, err := c.execute(ctx, "GET", url)
 
 	if err != nil {
 		return ClientError{Message: fmt.Sprintf("Failed to make a request %s", err.Error()), Url: url}
@@ -44,4 +45,12 @@ func (c *Client) Get(url string, model interface{}) error {
 		return ClientError{Message: fmt.Sprintf("parsing error %s", err.Error()), Url: url}
 	}
 	return nil
+}
+
+func (c *Client) execute(context context.Context, method string, url string) (resp *http.Response, err error) {
+	req, err := http.NewRequestWithContext(context, method, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	return c.client.Do(req)
 }
