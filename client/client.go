@@ -31,30 +31,30 @@ func (c *InventoryClient) GetItems() (*[]Inventory, error) {
 	response, err := c.http.Get(fullPath)
 
 	if err != nil {
-		c.logFailedRequest("GET", fullPath, &startTime)
+		c.logFailedRequest("GET", fullPath, startTime)
 		return nil, InventoryClientError{Message: fmt.Sprintf("Failed to make a request %s", err.Error()), Url: fullPath}
 	}
 
 	buffer, err := ioutil.ReadAll(response.Body)
 
 	if response.StatusCode >= 400 || response.StatusCode < 200 {
-		c.logFailedRequest("GET", fullPath, &startTime)
+		c.logFailedRequest("GET", fullPath, startTime)
 		return nil, InventoryClientHttpError{ResponseBody: buffer, Url: fullPath, StatusCode: response.StatusCode}
 	}
 
 	if err != nil {
-		c.logFailedRequest("GET", fullPath, &startTime)
+		c.logFailedRequest("GET", fullPath, startTime)
 		return nil, InventoryClientError{Message: fmt.Sprintf("Failed due to IO error %s", err.Error()), Url: fullPath}
 	}
 
 	var items []Inventory
 	err = json.Unmarshal(buffer, &items)
 	if err != nil {
-		c.logFailedRequest("GET", fullPath, &startTime)
+		c.logFailedRequest("GET", fullPath, startTime)
 		return nil, InventoryClientError{Message: fmt.Sprintf("Failed due to parsing error %s", err.Error()), Url: fullPath}
 	}
 
-	c.logFinishedRequest("GET", fullPath, &startTime)
+	c.logFinishedRequest("GET", fullPath, startTime)
 	return &items, nil
 
 }
@@ -63,14 +63,14 @@ func (c *InventoryClient) logNewRequest(method string, path string) {
 	c.log.Info.Printf("Outgoing request [%s] %s", method, path)
 }
 
-func (c *InventoryClient) logFinishedRequest(method string, path string, startTime *time.Time) {
+func (c *InventoryClient) logFinishedRequest(method string, path string, startTime time.Time) {
 	c.log.Info.Printf("Outoing request [%s] %s finished in %d ms", method, path, elapsedTime(startTime).Milliseconds())
 }
 
-func (c *InventoryClient) logFailedRequest(method string, path string, startTime *time.Time) {
+func (c *InventoryClient) logFailedRequest(method string, path string, startTime time.Time) {
 	c.log.Error.Printf("Outoing request [%s] %s failed in %d ms", method, path, elapsedTime(startTime).Milliseconds())
 }
 
-func elapsedTime(startTime *time.Time) time.Duration {
-	return time.Now().Sub(*startTime)
+func elapsedTime(startTime time.Time) time.Duration {
+	return time.Now().Sub(startTime)
 }
