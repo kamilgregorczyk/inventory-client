@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/url"
 	"test2/inventory"
@@ -14,12 +15,12 @@ func main() {
 			Scheme: "https",
 			Host:   "inventory.raspicluster.pl"},
 	})
-	items, err := inventoryClient.GetItems()
+	items, err := inventoryClient.GetItems(context.Background())
 	if err != nil {
 		log.Panicf(err.Error())
 	} else {
 		log.Printf("Items: %+v", items)
-		item, err := inventoryClient.GetItem(items[0].Id)
+		item, err := inventoryClient.GetItem(context.Background(), items[0].Id)
 		if err != nil {
 			log.Panicf(err.Error())
 		} else {
