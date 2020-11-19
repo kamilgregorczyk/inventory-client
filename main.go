@@ -3,12 +3,12 @@ package main
 import (
 	"log"
 	"net/url"
-	"test2/client"
+	"test2/inventoryclient"
 	"time"
 )
 
 func main() {
-	inventoryClient := client.NewInventoryClient(time.Second, &url.URL{
+	inventoryClient := inventoryclient.New(time.Second, &url.URL{
 		Scheme: "https",
 		Host:   "inventory.raspicluster.pl"})
 	items, err := inventoryClient.GetItems()

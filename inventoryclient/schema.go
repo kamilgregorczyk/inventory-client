@@ -1,4 +1,4 @@
-package client
+package inventoryclient
 
 type Inventory struct {
 	Id          int    `json:"id"`

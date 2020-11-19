@@ -1,4 +1,4 @@
-package client
+package inventoryclient
 
 import (
 	"encoding/json"
@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func NewInventoryClient(timeout time.Duration, url *url.URL) *InventoryClient {
+func New(timeout time.Duration, url *url.URL) *InventoryClient {
 	return &InventoryClient{
 		Url:  url,
 		Http: &http.Client{Timeout: timeout},
