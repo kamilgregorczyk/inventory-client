@@ -1,6 +1,7 @@
 package http
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -24,12 +25,34 @@ func New(config Config) *Client {
 }
 
 func (c *Client) Get(ctx context.Context, url string, model interface{}) error {
-	response, err := c.execute(ctx, "GET", url)
+	response, err := c.execute(ctx, "GET", url, nil)
+	if err != nil {
+		return err
+	}
+	return readResponse(response, err, url, model)
+}
+
+func (c *Client) Post(ctx context.Context, url string, body interface{}, model interface{}) error {
+	response, err := c.execute(ctx, "POST", url, body)
+	return readResponse(response, err, url, model)
+}
+
+func (c *Client) execute(context context.Context, method string, url string, body interface{}) (resp *http.Response, err error) {
+	marshaledBody, err := json.Marshal(body)
 
 	if err != nil {
-		return ClientError{Message: fmt.Sprintf("Failed to make a request %s", err.Error()), Url: url}
+		return nil, ClientError{Message: fmt.Sprintf("marshal error %s", err.Error()), Url: url}
 	}
+	req, err := http.NewRequestWithContext(context, method, url, bytes.NewBuffer(marshaledBody))
+	if err != nil {
+		return nil, ClientError{Message: fmt.Sprintf("network error %s", err.Error()), Url: url}
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+	return c.client.Do(req)
+}
 
+func readResponse(response *http.Response, err error, url string, model interface{}) error {
 	buffer, err := ioutil.ReadAll(response.Body)
 
 	if response.StatusCode >= 400 || response.StatusCode < 200 {
@@ -45,12 +68,4 @@ func (c *Client) Get(ctx context.Context, url string, model interface{}) error {
 		return ClientError{Message: fmt.Sprintf("parsing error %s", err.Error()), Url: url}
 	}
 	return nil
-}
-
-func (c *Client) execute(context context.Context, method string, url string) (resp *http.Response, err error) {
-	req, err := http.NewRequestWithContext(context, method, url, nil)
-	if err != nil {
-		return nil, err
-	}
-	return c.client.Do(req)
 }
