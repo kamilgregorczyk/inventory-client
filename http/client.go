@@ -6,21 +6,25 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"net/http"
+	corehttp "net/http"
+	"test2/http/retry"
 	"time"
 )
 
 type Config struct {
-	Timeout    time.Duration
-	MaxRetries uint
+	Timeout time.Duration
+	Retries retry.RetriesConfig
 }
 
 type Client struct {
-	client *http.Client
+	client *corehttp.Client
+	retry  *retry.Retry
 }
 
 func New(config Config) *Client {
-	return &Client{client: &http.Client{Timeout: config.Timeout},
+	return &Client{
+		client: &corehttp.Client{Timeout: config.Timeout},
+		retry:  retry.NewRetries(config.Retries),
 	}
 }
 
@@ -37,22 +41,37 @@ func (c *Client) Post(ctx context.Context, url string, body interface{}, model i
 	return readResponse(response, err, url, model)
 }
 
-func (c *Client) execute(context context.Context, method string, url string, body interface{}) (resp *http.Response, err error) {
+func (c *Client) execute(context context.Context, method string, url string, body interface{}) (resp *corehttp.Response, err error) {
 	marshaledBody, err := json.Marshal(body)
 
 	if err != nil {
 		return nil, ClientError{Message: fmt.Sprintf("marshal error %s", err.Error()), Url: url}
 	}
-	req, err := http.NewRequestWithContext(context, method, url, bytes.NewBuffer(marshaledBody))
+
+	req, err := corehttp.NewRequestWithContext(context, method, url, bytes.NewBuffer(marshaledBody))
 	if err != nil {
 		return nil, ClientError{Message: fmt.Sprintf("network error %s", err.Error()), Url: url}
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
-	return c.client.Do(req)
+	return c.executeWithRetry(req)
 }
 
-func readResponse(response *http.Response, err error, url string, model interface{}) error {
+func (c *Client) executeWithRetry(req *corehttp.Request) (*corehttp.Response, error) {
+	return c.retry.Execute(func() (*corehttp.Response, error) {
+		response, err := c.client.Do(req)
+		if shouldRetry(response) {
+			return response, retry.RetryableError(err)
+		}
+		return response, err
+	})
+}
+
+func shouldRetry(response *corehttp.Response) bool {
+	return response == nil || response.StatusCode >= 500
+}
+
+func readResponse(response *corehttp.Response, err error, url string, model interface{}) error {
 	buffer, err := ioutil.ReadAll(response.Body)
 
 	if response.StatusCode >= 400 || response.StatusCode < 200 {
