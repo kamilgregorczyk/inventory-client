@@ -61,7 +61,6 @@ func (r *Retry) Execute(runnable RetryFunc) (*http.Response, error) {
 		tryCount++
 		select {
 		case <-time.After(r.next(tryCount)):
-			continue
 		}
 
 	}
@@ -69,6 +68,7 @@ func (r *Retry) Execute(runnable RetryFunc) (*http.Response, error) {
 }
 
 func (r *Retry) next(currentTry int) time.Duration {
-	return time.Duration(r.config.Delay.Milliseconds() * int64(math.Pow(r.config.Factor, float64(currentTry))))
+	delay := r.config.Delay.Nanoseconds() * int64(math.Pow(r.config.Factor, float64(currentTry)))
+	return time.Duration(delay)
 
 }

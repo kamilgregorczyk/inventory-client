@@ -14,11 +14,11 @@ func main() {
 		Timeout: time.Second,
 		Url: url.URL{
 			Scheme: "https",
-			Host:   "inventory2.raspicluster.pl"},
+			Host:   "inventory.raspicluster.pl"},
 		RetriesConfig: retry.RetriesConfig{
 			MaxRetries: 3,
 			Delay:      time.Second,
-			Factor:     2.0,
+			Factor:     1.3,
 		},
 	})
 	items, err := inventoryClient.GetItems(context.Background())
