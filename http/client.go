@@ -9,9 +9,8 @@ import (
 )
 
 type Config struct {
-	Timeout time.Duration
+	Timeout    time.Duration
 	MaxRetries uint
-
 }
 
 type Client struct {
