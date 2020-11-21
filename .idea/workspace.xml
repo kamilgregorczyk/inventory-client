@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61055360-fe20-436b-afb1-1f984888be4f" name="Default Changelist" comment="" />
+    <list default="true" id="61055360-fe20-436b-afb1-1f984888be4f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/http/retry/errors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/retry/retry_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/retry/retry.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/retry/retry.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/inventory/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +25,9 @@
     </option>
   </component>
   <component name="GOROOT" path="/usr/local/Cellar/go/1.15.5/libexec" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
@@ -24,6 +36,9 @@
     <option name="namespace" value="default" />
   </component>
   <component name="ProjectId" id="1kQSp9WEG1cEDoggQe8GUk2MOkf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -33,7 +48,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/inventoryclient" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -72,64 +87,75 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="371" y="556" width="950" height="585" key="#xdebugger.evaluate" timestamp="1605826872951">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state x="1645" y="541" key="#Inspections" timestamp="1605975099878">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
+    <state x="1645" y="541" key="#Inspections/0.25.2944.1667@0.25.2944.1667" timestamp="1605975099878" />
+    <state x="96" y="560" width="950" height="585" key="#xdebugger.evaluate" timestamp="1605981983581">
+      <screen x="0" y="25" width="2944" height="1667" />
+    </state>
+    <state x="96" y="560" key="#xdebugger.evaluate/0.25.2944.1667@0.25.2944.1667" timestamp="1605981983581" />
     <state x="371" y="556" width="950" height="585" key="#xdebugger.evaluate/0.25.2948.1667@0.25.2948.1667" timestamp="1605826872951" />
-    <state width="1823" height="489" key="GridCell.Tab.0.bottom" timestamp="1605827529826">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state width="1829" height="489" key="GridCell.Tab.0.bottom" timestamp="1605982215045">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.bottom/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="1823" height="489" key="GridCell.Tab.0.bottom/0.25.2948.1667@0.25.2948.1667" timestamp="1605827529826" />
-    <state width="1823" height="489" key="GridCell.Tab.0.center" timestamp="1605827529825">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state width="1829" height="489" key="GridCell.Tab.0.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1605982215045" />
+    <state width="1823" height="489" key="GridCell.Tab.0.bottom/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
+    <state width="1829" height="489" key="GridCell.Tab.0.center" timestamp="1605982215044">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.center/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="1823" height="489" key="GridCell.Tab.0.center/0.25.2948.1667@0.25.2948.1667" timestamp="1605827529825" />
-    <state width="1823" height="489" key="GridCell.Tab.0.left" timestamp="1605827529825">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state width="1829" height="489" key="GridCell.Tab.0.center/0.25.2944.1667@0.25.2944.1667" timestamp="1605982215044" />
+    <state width="1823" height="489" key="GridCell.Tab.0.center/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
+    <state width="1829" height="489" key="GridCell.Tab.0.left" timestamp="1605982215044">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.left/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="1823" height="489" key="GridCell.Tab.0.left/0.25.2948.1667@0.25.2948.1667" timestamp="1605827529825" />
-    <state width="1823" height="489" key="GridCell.Tab.0.right" timestamp="1605827529825">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state width="1829" height="489" key="GridCell.Tab.0.left/0.25.2944.1667@0.25.2944.1667" timestamp="1605982215044" />
+    <state width="1823" height="489" key="GridCell.Tab.0.left/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
+    <state width="1829" height="489" key="GridCell.Tab.0.right" timestamp="1605982215045">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.right/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="1823" height="489" key="GridCell.Tab.0.right/0.25.2948.1667@0.25.2948.1667" timestamp="1605827529825" />
-    <state width="1823" height="470" key="GridCell.Tab.1.bottom" timestamp="1605826874149">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state width="1829" height="489" key="GridCell.Tab.0.right/0.25.2944.1667@0.25.2944.1667" timestamp="1605982215045" />
+    <state width="1823" height="489" key="GridCell.Tab.0.right/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
+    <state width="1829" height="470" key="GridCell.Tab.1.bottom" timestamp="1605982053840">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
+    <state width="1829" height="470" key="GridCell.Tab.1.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1605982053840" />
     <state width="1823" height="470" key="GridCell.Tab.1.bottom/0.25.2948.1667@0.25.2948.1667" timestamp="1605826874149" />
-    <state width="1823" height="470" key="GridCell.Tab.1.center" timestamp="1605826874149">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state width="1829" height="470" key="GridCell.Tab.1.center" timestamp="1605982053840">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
+    <state width="1829" height="470" key="GridCell.Tab.1.center/0.25.2944.1667@0.25.2944.1667" timestamp="1605982053840" />
     <state width="1823" height="470" key="GridCell.Tab.1.center/0.25.2948.1667@0.25.2948.1667" timestamp="1605826874149" />
-    <state width="1823" height="470" key="GridCell.Tab.1.left" timestamp="1605826874149">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state width="1829" height="470" key="GridCell.Tab.1.left" timestamp="1605982053840">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
+    <state width="1829" height="470" key="GridCell.Tab.1.left/0.25.2944.1667@0.25.2944.1667" timestamp="1605982053840" />
     <state width="1823" height="470" key="GridCell.Tab.1.left/0.25.2948.1667@0.25.2948.1667" timestamp="1605826874149" />
-    <state width="1823" height="470" key="GridCell.Tab.1.right" timestamp="1605826874149">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state width="1829" height="470" key="GridCell.Tab.1.right" timestamp="1605982053840">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
+    <state width="1829" height="470" key="GridCell.Tab.1.right/0.25.2944.1667@0.25.2944.1667" timestamp="1605982053840" />
     <state width="1823" height="470" key="GridCell.Tab.1.right/0.25.2948.1667@0.25.2948.1667" timestamp="1605826874149" />
+    <state x="1635" y="473" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1605978650487">
+      <screen x="0" y="25" width="2944" height="1667" />
+    </state>
+    <state x="1635" y="473" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.25.2944.1667@0.25.2944.1667" timestamp="1605978650487" />
+    <state x="1430" y="491" width="599" height="735" key="find.popup" timestamp="1605979708592">
+      <screen x="0" y="25" width="2944" height="1667" />
+    </state>
+    <state x="1430" y="491" width="599" height="735" key="find.popup/0.25.2944.1667@0.25.2944.1667" timestamp="1605979708592" />
     <state x="1956" y="680" key="refactoring.ChangeSignatureDialog" timestamp="1605817888176">
       <screen x="0" y="25" width="2948" height="1667" />
     </state>
     <state x="1956" y="680" key="refactoring.ChangeSignatureDialog/0.25.2948.1667@0.25.2948.1667" timestamp="1605817888176" />
-    <state x="1872" y="410" width="672" height="678" key="search.everywhere.popup" timestamp="1605824181702">
-      <screen x="0" y="25" width="2948" height="1667" />
+    <state x="1869" y="410" width="672" height="678" key="search.everywhere.popup" timestamp="1605981288868">
+      <screen x="0" y="25" width="2944" height="1667" />
     </state>
+    <state x="1869" y="410" width="672" height="678" key="search.everywhere.popup/0.25.2944.1667@0.25.2944.1667" timestamp="1605981288868" />
     <state x="1872" y="410" width="672" height="678" key="search.everywhere.popup/0.25.2948.1667@0.25.2948.1667" timestamp="1605824181702" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/http/retry/retry.go</url>
-          <line>71</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

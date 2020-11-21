@@ -13,8 +13,18 @@ type RetriesConfig struct {
 	Factor     float64
 }
 
-func NewRetries(config RetriesConfig) *Retry {
-	return &Retry{config: config}
+func NewRetries(config RetriesConfig) (*Retry, error) {
+	if config.MaxRetries <= 0 {
+		return nil, MaxRetriesBellowZeroError
+	}
+	if config.Delay.Milliseconds() <= 0 {
+		return nil, DelayBellowZeroError
+	}
+	if config.Factor <= 0 {
+		return nil, FactorZeroError
+	}
+
+	return &Retry{config: config}, nil
 }
 
 type Retry struct {
@@ -22,28 +32,6 @@ type Retry struct {
 }
 
 type RetryFunc func() (*http.Response, error)
-
-func RetryableError(err error) error {
-	if err == nil {
-		return nil
-	}
-	return &retryableError{err}
-}
-
-type retryableError struct {
-	err error
-}
-
-func (e *retryableError) Unwrap() error {
-	return e.err
-}
-
-func (e *retryableError) Error() string {
-	if e.err == nil {
-		return "retryable: <nil>"
-	}
-	return "retryable: " + e.err.Error()
-}
 
 func (r *Retry) Execute(runnable RetryFunc) (*http.Response, error) {
 	var tryCount int

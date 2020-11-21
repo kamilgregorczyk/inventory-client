@@ -9,15 +9,7 @@ import (
 	"time"
 )
 
-func New(config Config) *Client {
-	client := http.New(http.Config{Timeout: config.Timeout, Retries: config.RetriesConfig})
-	return &Client{
-		Url:    config.Url,
-		Client: client,
-	}
-}
-
-type Config struct {
+type ClientConfig struct {
 	Timeout       time.Duration
 	Url           url.URL
 	RetriesConfig retry.RetriesConfig
@@ -26,6 +18,17 @@ type Config struct {
 type Client struct {
 	Url    url.URL
 	Client *http.Client
+}
+
+func NewClient(config ClientConfig) (*Client, error) {
+	client, err := http.NewClient(http.ClientConfig{Timeout: config.Timeout, Retries: config.RetriesConfig})
+	if err != nil {
+		return nil, err
+	}
+	return &Client{
+		Url:    config.Url,
+		Client: client,
+	}, nil
 }
 
 func (c *Client) GetItems(ctx context.Context) ([]Inventory, error) {

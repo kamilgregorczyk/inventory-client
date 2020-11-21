@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-type Config struct {
+type ClientConfig struct {
 	Timeout time.Duration
 	Retries retry.RetriesConfig
 }
@@ -21,23 +21,38 @@ type Client struct {
 	retry  *retry.Retry
 }
 
-func New(config Config) *Client {
+func NewClient(config ClientConfig) (*Client, error) {
+	if config.Timeout.Milliseconds() <= 0 {
+		return nil, TimeoutBellowZeroError
+	}
+
+	retry, err := retry.NewRetries(config.Retries)
+
+	if err != nil {
+		return nil, err
+	}
+
 	return &Client{
 		client: &corehttp.Client{Timeout: config.Timeout},
-		retry:  retry.NewRetries(config.Retries),
-	}
+		retry:  retry,
+	}, nil
 }
 
 func (c *Client) Get(ctx context.Context, url string, model interface{}) error {
 	response, err := c.execute(ctx, "GET", url, nil)
 	if err != nil {
-		return err
+		return &ClientError{Message: "network error", Url: url, Err: err}
 	}
+	defer response.Body.Close()
 	return readResponse(response, err, url, model)
 }
 
 func (c *Client) Post(ctx context.Context, url string, body interface{}, model interface{}) error {
 	response, err := c.execute(ctx, "POST", url, body)
+	if err != nil {
+		return &ClientError{Message: "network error", Url: url, Err: err}
+	}
+	defer response.Body.Close()
 	return readResponse(response, err, url, model)
 }
 
@@ -45,12 +60,12 @@ func (c *Client) execute(context context.Context, method string, url string, bod
 	marshaledBody, err := json.Marshal(body)
 
 	if err != nil {
-		return nil, ClientError{Message: fmt.Sprintf("marshal error %s", err.Error()), Url: url}
+		return nil, fmt.Errorf("marshal error on url %s %w", url, err)
 	}
 
 	req, err := corehttp.NewRequestWithContext(context, method, url, bytes.NewBuffer(marshaledBody))
 	if err != nil {
-		return nil, ClientError{Message: fmt.Sprintf("network error %s", err.Error()), Url: url}
+		return nil, &ClientError{Message: "network error", Url: url, Err: err}
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
@@ -75,16 +90,16 @@ func readResponse(response *corehttp.Response, err error, url string, model inte
 	buffer, err := ioutil.ReadAll(response.Body)
 
 	if response.StatusCode >= 400 || response.StatusCode < 200 {
-		return ClientHttpError{ResponseBody: buffer, Url: url, StatusCode: response.StatusCode}
+		return &ClientHttpError{ResponseBody: buffer, Url: url, StatusCode: response.StatusCode}
 	}
 
 	if err != nil {
-		return ClientError{Message: fmt.Sprintf("io error %s", err.Error()), Url: url}
+		return &ClientError{Message: "io error", Url: url, Err: err}
 	}
 
 	err = json.Unmarshal(buffer, model)
 	if err != nil {
-		return ClientError{Message: fmt.Sprintf("parsing error %s", err.Error()), Url: url}
+		return &ClientError{Message: "parsing error", Url: url, Err: err}
 	}
 	return nil
 }
