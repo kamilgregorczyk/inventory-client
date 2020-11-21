@@ -3,9 +3,9 @@ package retry
 import "errors"
 
 var (
-	MaxRetriesBellowZeroError = errors.New("maxRetries has to be larger than 0")
-	DelayBellowZeroError      = errors.New("delay has to be larger than 0")
-	FactorZeroError           = errors.New("factor has to be larger than 0")
+	MaxRetriesZeroError = errors.New("maxRetries has to be larger than 0")
+	DelayZeroError      = errors.New("delay has to be larger than 0")
+	FactorZeroError     = errors.New("factor has to be larger than 0")
 )
 
 func RetryableError(err error) error {

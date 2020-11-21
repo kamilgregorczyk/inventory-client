@@ -15,10 +15,10 @@ type RetriesConfig struct {
 
 func NewRetries(config RetriesConfig) (*Retry, error) {
 	if config.MaxRetries <= 0 {
-		return nil, MaxRetriesBellowZeroError
+		return nil, MaxRetriesZeroError
 	}
 	if config.Delay.Milliseconds() <= 0 {
-		return nil, DelayBellowZeroError
+		return nil, DelayZeroError
 	}
 	if config.Factor <= 0 {
 		return nil, FactorZeroError
