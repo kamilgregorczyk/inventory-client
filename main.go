@@ -14,7 +14,7 @@ func main() {
 		Timeout: time.Second,
 		Url: url.URL{
 			Scheme: "https",
-			Host:   "inventoryy.raspicluster.pl"},
+			Host:   "inventory.raspicluster.pl"},
 		RetriesConfig: retry.RetriesConfig{
 			MaxRetries: 3,
 			Delay:      time.Second,
@@ -29,7 +29,7 @@ func main() {
 		log.Panicf(err.Error())
 	} else {
 		log.Printf("Items: %+v", items)
-		item, err := inventoryClient.GetItem(context.Background(), items[0].Id)
+		item, err := inventoryClient.GetItem(context.Background(), 99)
 		if err != nil {
 			log.Panicf(err.Error())
 		} else {

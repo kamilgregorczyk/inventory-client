@@ -8,22 +8,16 @@ var (
 	FactorZeroError     = errors.New("factor has to be larger than 0")
 )
 
-func RetryableError(err error) error {
-	if err == nil {
-		return nil
-	}
-	return &retryableError{err}
-}
 
-type retryableError struct {
+type RetryableError struct {
 	Err error
 }
 
-func (e *retryableError) Unwrap() error {
+func (e *RetryableError) Unwrap() error {
 	return e.Err
 }
 
-func (e *retryableError) Error() string {
+func (e *RetryableError) Error() string {
 	if e.Err == nil {
 		return "retryable: <nil>"
 	}

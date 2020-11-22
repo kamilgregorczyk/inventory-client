@@ -2,6 +2,7 @@ package retry
 
 import (
 	"errors"
+	"net/http"
 	"testing"
 	"time"
 )
@@ -62,4 +63,133 @@ func TestNewRetriesWithInValidConfig(t *testing.T) {
 
 		}
 	}
+}
+
+func TestRetryWithSuccessAtFirstTry(t *testing.T) {
+	maxRetries := 3
+	delay := time.Millisecond
+	factor := 1.0
+	t.Logf("Given valid RetriesConfig maxRetries=%d delay=%s factor=%0.2f", maxRetries, delay, factor)
+	config := RetriesConfig{
+		MaxRetries: maxRetries,
+		Delay:      delay,
+		Factor:     factor,
+	}
+	t.Logf("And given Retry")
+	retry, _ := NewRetries(config)
+
+	t.Logf("And given a func to run")
+	var callCount int
+	expectedResponse := http.Response{}
+	funcToRetry := func() (*http.Response, error) {
+		callCount++
+		return &expectedResponse, nil
+	}
+
+	t.Logf("When executing a func")
+	response, err := retry.Execute(funcToRetry)
+
+	t.Logf("Should call only once and not return any errors")
+	if callCount != 1 {
+		t.Errorf("Func should be called 1 was called %d times", callCount)
+	}
+
+	if err != nil {
+		t.Errorf("Error should not be returned with a successful retry")
+	}
+
+	if &expectedResponse != response {
+		t.Errorf("ExpectedResponse is not the response that should be returned")
+	}
+}
+
+func TestRetryWithInitialFailuresAndThenSuccess(t *testing.T) {
+	numberOfRetries := []int{1, 2, 3}
+	for _, retryCount := range numberOfRetries {
+		maxRetries := 3
+		delay := time.Millisecond
+		factor := 1.0
+		t.Logf("Given valid RetriesConfig maxRetries=%d delay=%s factor=%0.2f", maxRetries, delay, factor)
+		config := RetriesConfig{
+			MaxRetries: maxRetries,
+			Delay:      delay,
+			Factor:     factor,
+		}
+		t.Logf("And given Retry")
+		retry, _ := NewRetries(config)
+
+		t.Logf("And given a func to run")
+		var callCount int
+		expectedResponse := http.Response{}
+		expectedCallCount := retryCount + 1
+		funcToRetry := func() (*http.Response, error) {
+			if retryCount > callCount {
+				callCount++
+				return &expectedResponse, &RetryableError{}
+			}
+			callCount++
+			return &expectedResponse, nil
+		}
+
+		t.Logf("When executing a func")
+		response, err := retry.Execute(funcToRetry)
+
+		t.Logf("Should call function %d times and not return any errors", expectedCallCount)
+		if callCount != expectedCallCount {
+			t.Errorf("Func should be called %d was called %d times", expectedCallCount, callCount)
+		}
+
+		if err != nil {
+			t.Errorf("Error should not be returned with a successful retry")
+		}
+
+		if &expectedResponse != response {
+			t.Errorf("ExpectedResponse is not the response that should be returned")
+		}
+	}
+
+}
+
+func TestRetryWithConstantFailures(t *testing.T) {
+	maxRetries := 3
+	delay := time.Millisecond
+	factor := 1.0
+	t.Logf("Given valid RetriesConfig maxRetries=%d delay=%s factor=%0.2f", maxRetries, delay, factor)
+	config := RetriesConfig{
+		MaxRetries: maxRetries,
+		Delay:      delay,
+		Factor:     factor,
+	}
+	t.Logf("And given Retry")
+	retry, _ := NewRetries(config)
+
+	t.Logf("And given a func to run")
+	var callCount int
+	expectedResponse := http.Response{}
+	funcToRetry := func() (*http.Response, error) {
+		callCount++
+		return &expectedResponse, &RetryableError{}
+	}
+
+	t.Logf("When executing a func")
+	response, err := retry.Execute(funcToRetry)
+
+	t.Logf("Should call function %d times and return errors", 4)
+	if callCount != 4 {
+		t.Errorf("Func should be called %d was called %d times", 4, callCount)
+	}
+
+	if err == nil {
+		t.Errorf("Error be returned")
+	}
+
+	var expectedError *RetryableError
+	if !errors.As(err, &expectedError) {
+		t.Errorf("Error after failed attempts should be RetryableError")
+	}
+
+	if &expectedResponse != response {
+		t.Errorf("ExpectedResponse is not the response that should be returned")
+	}
+
 }

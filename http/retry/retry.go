@@ -41,7 +41,7 @@ func (r *Retry) Execute(runnable RetryFunc) (*http.Response, error) {
 			return response, err
 		}
 
-		var retryError *retryableError
+		var retryError *RetryableError
 		if !errors.As(err, &retryError) {
 			return response, err
 		}

@@ -76,7 +76,7 @@ func (c *Client) executeWithRetry(req *corehttp.Request) (*corehttp.Response, er
 	return c.retry.Execute(func() (*corehttp.Response, error) {
 		response, err := c.client.Do(req)
 		if shouldRetry(response) {
-			return response, retry.RetryableError(err)
+			return response, &retry.RetryableError{Err: err}
 		}
 		return response, err
 	})
