@@ -13,12 +13,16 @@ import (
 type ClientConfig struct {
 	Timeout time.Duration
 	Retries retry.RetriesConfig
+	Headers Headers
 }
 
 type Client struct {
-	client *corehttp.Client
-	retry  *retry.Retry
+	client  *corehttp.Client
+	retry   *retry.Retry
+	headers Headers
 }
+
+type Headers map[string]string
 
 func NewClient(config ClientConfig) (*Client, error) {
 	if config.Timeout.Milliseconds() <= 0 {
@@ -32,8 +36,9 @@ func NewClient(config ClientConfig) (*Client, error) {
 	}
 
 	return &Client{
-		client: &corehttp.Client{Timeout: config.Timeout},
-		retry:  retry,
+		client:  &corehttp.Client{Timeout: config.Timeout},
+		retry:   retry,
+		headers: config.Headers,
 	}, nil
 }
 
@@ -81,8 +86,9 @@ func (c *Client) createRequest(context context.Context, method string, url strin
 }
 
 func (c *Client) setHeaders(req *corehttp.Request) {
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Accept", "application/json")
+	for key, value := range c.headers {
+		req.Header.Set(key, value)
+	}
 }
 
 func (c *Client) executeWithRetry(request *corehttp.Request) (*corehttp.Response, error) {

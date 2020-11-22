@@ -21,7 +21,13 @@ type Client struct {
 }
 
 func NewClient(config ClientConfig) (*Client, error) {
-	client, err := http.NewClient(http.ClientConfig{Timeout: config.Timeout, Retries: config.RetriesConfig})
+	client, err := http.NewClient(http.ClientConfig{
+		Timeout: config.Timeout,
+		Retries: config.RetriesConfig,
+		Headers: http.Headers{
+			"Content-Type": "application/json",
+			"Accept":       "application/json",
+		}})
 	if err != nil {
 		return nil, err
 	}
