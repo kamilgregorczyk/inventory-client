@@ -1,3 +1,18 @@
+// Package that provides functionality of retries to http clients with delays
+// calculated based on exponential backoff strategy.
+//
+// The NewRetries function creates new Retry with based on RetryConfig with validation.
+//
+// The Execute function should be called whenever caller needs to run an http query with eventual retries.
+// Caller has to provide the logic that will be retried with RetryFunc.
+//
+// In order for Retry to execute again provided RetryFunc, the caller has to return RetryableError,
+// otherwise the execution will be treated as successfully no matter it error of other type is returned or not
+// (as some errors are not worth to retry)
+//
+// The delay between retries is calculated based on a simple exponential-backoff equation: delay * factor^currentTry
+// Providing delay of 1 second, factor 2.0  and maximum number of retires will retry in 1s, 3s and 7s of delay between runs
+//
 package retry
 
 import (
@@ -13,6 +28,7 @@ type RetriesConfig struct {
 	Factor     float64
 }
 
+// Constructs new Retry from RetriesConfig
 func NewRetries(config RetriesConfig) (*Retry, error) {
 	if config.MaxRetries <= 0 {
 		return nil, MaxRetriesZeroError
