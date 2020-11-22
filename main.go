@@ -12,13 +12,14 @@ import (
 func main() {
 	inventoryClient, err := inventory.NewClient(inventory.ClientConfig{
 		Timeout: time.Second,
+		Logging: true,
 		Url: url.URL{
 			Scheme: "https",
 			Host:   "inventory.raspicluster.pl"},
 		RetriesConfig: retry.RetriesConfig{
 			MaxRetries: 3,
 			Delay:      time.Second,
-			Factor:     1.3,
+			Factor:     1,
 		},
 	})
 	if err != nil {

@@ -5,8 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/client.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/client_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/errors.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/retry/retry_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/retry/retry_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/inventory/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,16 +61,14 @@
       <recent name="$PROJECT_DIR$/client" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.go test test2/http">
-    <configuration name="TestClient_GetWithDialError in test2/http" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Build.go build test2">
+    <configuration name="go build test2" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="test2" />
-      <working_directory value="$PROJECT_DIR$/http" />
-      <framework value="gotest" />
+      <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="test2/http" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="test2" />
       <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestClient_GetWithDialError\E$" />
       <method v="2" />
     </configuration>
     <configuration name="TestClient_Post in test2/http" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -95,6 +93,17 @@
       <pattern value="^\QTestClient_PostWithHttpError\E$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestClient_PostWithRequestBodyParsingError in test2/http" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="test2" />
+      <working_directory value="$PROJECT_DIR$/http" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="test2/http" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestClient_PostWithRequestBodyParsingError\E$" />
+      <method v="2" />
+    </configuration>
     <configuration name="go test test2/http" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="test2" />
       <working_directory value="$PROJECT_DIR$/http" />
@@ -105,23 +114,13 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <configuration name="go test test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="test2" />
-      <working_directory value="$PROJECT_DIR$/http/retry" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="test2/http/retry" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build test2" />
         <item itemvalue="Go Test.go test test2/http" />
+        <item itemvalue="Go Test.TestClient_PostWithRequestBodyParsingError in test2/http" />
         <item itemvalue="Go Test.TestClient_PostWithHttpError in test2/http" />
         <item itemvalue="Go Test.TestClient_Post in test2/http" />
-        <item itemvalue="Go Test.TestClient_GetWithDialError in test2/http" />
-        <item itemvalue="Go Test.go test test2/http/retry" />
       </list>
     </recent_temporary>
   </component>
@@ -140,68 +139,72 @@
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state x="1645" y="541" key="#Inspections/0.25.2944.1667@0.25.2944.1667" timestamp="1605975099878" />
-    <state x="404" y="376" width="1132" height="577" key="#xdebugger.evaluate" timestamp="1606068686989">
+    <state x="1376" y="746" width="1132" height="577" key="#xdebugger.evaluate" timestamp="1606076211348">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state x="1028" y="297" key="#xdebugger.evaluate/0.0.3008.1692@0.0.3008.1692" timestamp="1606063419353" />
-    <state x="404" y="376" width="1132" height="577" key="#xdebugger.evaluate/0.25.2944.1667@0.25.2944.1667" timestamp="1606068686989" />
+    <state x="1376" y="746" width="1132" height="577" key="#xdebugger.evaluate/0.25.2944.1667@0.25.2944.1667" timestamp="1606076211348" />
     <state x="371" y="556" width="950" height="585" key="#xdebugger.evaluate/0.25.2948.1667@0.25.2948.1667" timestamp="1605826872951" />
-    <state width="2541" height="363" key="GridCell.Tab.0.bottom" timestamp="1606068772883">
+    <state width="1899" height="475" key="GridCell.Tab.0.bottom" timestamp="1606078225518">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="2966" height="370" key="GridCell.Tab.0.bottom/0.0.3008.1692@0.0.3008.1692" timestamp="1606066019338" />
     <state width="1435" height="492" key="GridCell.Tab.0.bottom/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="2541" height="363" key="GridCell.Tab.0.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1606068772883" />
+    <state width="1899" height="475" key="GridCell.Tab.0.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1606078225518" />
     <state width="1823" height="489" key="GridCell.Tab.0.bottom/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="2541" height="363" key="GridCell.Tab.0.center" timestamp="1606068772883">
+    <state width="1899" height="475" key="GridCell.Tab.0.center" timestamp="1606078225517">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="2966" height="370" key="GridCell.Tab.0.center/0.0.3008.1692@0.0.3008.1692" timestamp="1606066019338" />
     <state width="1435" height="492" key="GridCell.Tab.0.center/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="2541" height="363" key="GridCell.Tab.0.center/0.25.2944.1667@0.25.2944.1667" timestamp="1606068772883" />
+    <state width="1899" height="475" key="GridCell.Tab.0.center/0.25.2944.1667@0.25.2944.1667" timestamp="1606078225517" />
     <state width="1823" height="489" key="GridCell.Tab.0.center/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="2541" height="363" key="GridCell.Tab.0.left" timestamp="1606068772883">
+    <state width="1899" height="475" key="GridCell.Tab.0.left" timestamp="1606078225517">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="2966" height="370" key="GridCell.Tab.0.left/0.0.3008.1692@0.0.3008.1692" timestamp="1606066019337" />
     <state width="1435" height="492" key="GridCell.Tab.0.left/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="2541" height="363" key="GridCell.Tab.0.left/0.25.2944.1667@0.25.2944.1667" timestamp="1606068772883" />
+    <state width="1899" height="475" key="GridCell.Tab.0.left/0.25.2944.1667@0.25.2944.1667" timestamp="1606078225517" />
     <state width="1823" height="489" key="GridCell.Tab.0.left/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="2541" height="363" key="GridCell.Tab.0.right" timestamp="1606068772883">
+    <state width="1899" height="475" key="GridCell.Tab.0.right" timestamp="1606078225517">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="2966" height="370" key="GridCell.Tab.0.right/0.0.3008.1692@0.0.3008.1692" timestamp="1606066019338" />
     <state width="1435" height="492" key="GridCell.Tab.0.right/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="2541" height="363" key="GridCell.Tab.0.right/0.25.2944.1667@0.25.2944.1667" timestamp="1606068772883" />
+    <state width="1899" height="475" key="GridCell.Tab.0.right/0.25.2944.1667@0.25.2944.1667" timestamp="1606078225517" />
     <state width="1823" height="489" key="GridCell.Tab.0.right/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="2541" height="469" key="GridCell.Tab.1.bottom" timestamp="1606068688300">
+    <state width="2902" height="469" key="GridCell.Tab.1.bottom" timestamp="1606076301824">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="2966" height="486" key="GridCell.Tab.1.bottom/0.0.3008.1692@0.0.3008.1692" timestamp="1606064632783" />
-    <state width="2541" height="469" key="GridCell.Tab.1.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1606068688300" />
+    <state width="2902" height="469" key="GridCell.Tab.1.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1606076301824" />
     <state width="1823" height="470" key="GridCell.Tab.1.bottom/0.25.2948.1667@0.25.2948.1667" timestamp="1605826874149" />
-    <state width="2541" height="469" key="GridCell.Tab.1.center" timestamp="1606068688300">
+    <state width="2902" height="469" key="GridCell.Tab.1.center" timestamp="1606076301824">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="2966" height="486" key="GridCell.Tab.1.center/0.0.3008.1692@0.0.3008.1692" timestamp="1606064632783" />
-    <state width="2541" height="469" key="GridCell.Tab.1.center/0.25.2944.1667@0.25.2944.1667" timestamp="1606068688300" />
+    <state width="2902" height="469" key="GridCell.Tab.1.center/0.25.2944.1667@0.25.2944.1667" timestamp="1606076301824" />
     <state width="1823" height="470" key="GridCell.Tab.1.center/0.25.2948.1667@0.25.2948.1667" timestamp="1605826874149" />
-    <state width="2541" height="469" key="GridCell.Tab.1.left" timestamp="1606068688300">
+    <state width="2902" height="469" key="GridCell.Tab.1.left" timestamp="1606076301823">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="2966" height="486" key="GridCell.Tab.1.left/0.0.3008.1692@0.0.3008.1692" timestamp="1606064632782" />
-    <state width="2541" height="469" key="GridCell.Tab.1.left/0.25.2944.1667@0.25.2944.1667" timestamp="1606068688300" />
+    <state width="2902" height="469" key="GridCell.Tab.1.left/0.25.2944.1667@0.25.2944.1667" timestamp="1606076301823" />
     <state width="1823" height="470" key="GridCell.Tab.1.left/0.25.2948.1667@0.25.2948.1667" timestamp="1605826874149" />
-    <state width="2541" height="469" key="GridCell.Tab.1.right" timestamp="1606068688300">
+    <state width="2902" height="469" key="GridCell.Tab.1.right" timestamp="1606076301824">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="2966" height="486" key="GridCell.Tab.1.right/0.0.3008.1692@0.0.3008.1692" timestamp="1606064632783" />
-    <state width="2541" height="469" key="GridCell.Tab.1.right/0.25.2944.1667@0.25.2944.1667" timestamp="1606068688300" />
+    <state width="2902" height="469" key="GridCell.Tab.1.right/0.25.2944.1667@0.25.2944.1667" timestamp="1606076301824" />
     <state width="1823" height="470" key="GridCell.Tab.1.right/0.25.2948.1667@0.25.2948.1667" timestamp="1605826874149" />
     <state x="1184" y="494" key="SettingsEditor" timestamp="1606060480844">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state x="1184" y="494" key="SettingsEditor/0.25.2944.1667@0.25.2944.1667" timestamp="1606060480844" />
+    <state width="1472" height="833" key="XDebugger.FullValuePopup" timestamp="1606069288047">
+      <screen x="0" y="25" width="2944" height="1667" />
+    </state>
+    <state width="1472" height="833" key="XDebugger.FullValuePopup/0.25.2944.1667@0.25.2944.1667" timestamp="1606069288047" />
     <state x="1635" y="473" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1605978650487">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
@@ -239,16 +242,6 @@
           <url>file:///usr/local/Cellar/go/1.15.5/libexec/src/errors/wrap.go</url>
           <line>54</line>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/http/client.go</url>
-          <line>127</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/http/client.go</url>
-          <line>119</line>
-          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

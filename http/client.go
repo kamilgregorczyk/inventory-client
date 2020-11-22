@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	corehttp "net/http"
 	"test2/http/retry"
 	"time"
@@ -14,12 +15,14 @@ type ClientConfig struct {
 	Timeout time.Duration
 	Retries retry.RetriesConfig
 	Headers Headers
+	Logging bool
 }
 
 type Client struct {
 	client  *corehttp.Client
 	retry   *retry.Retry
 	headers Headers
+	logging bool
 }
 
 type Headers map[string]string
@@ -30,7 +33,6 @@ func NewClient(config ClientConfig) (*Client, error) {
 	}
 
 	retry, err := retry.NewRetries(config.Retries)
-
 	if err != nil {
 		return nil, err
 	}
@@ -39,11 +41,28 @@ func NewClient(config ClientConfig) (*Client, error) {
 		client:  &corehttp.Client{Timeout: config.Timeout},
 		retry:   retry,
 		headers: config.Headers,
+		logging: config.Logging,
 	}, nil
 }
 
 func (c *Client) Get(ctx context.Context, url string, model interface{}) error {
-	request, err := c.createRequest(ctx, "GET", url, nil)
+	method := "GET"
+	request, err := c.createRequest(ctx, method, url, nil)
+	if err != nil {
+		return err
+	}
+
+	response, err := c.executeWithRetry(request)
+	if err != nil {
+		return err
+	}
+
+	return readResponse(response, err, url, model)
+}
+
+func (c *Client) Delete(ctx context.Context, url string, model interface{}) error {
+	method := "DELETE"
+	request, err := c.createRequest(ctx, method, url, nil)
 	if err != nil {
 		return err
 	}
@@ -57,7 +76,8 @@ func (c *Client) Get(ctx context.Context, url string, model interface{}) error {
 }
 
 func (c *Client) Post(ctx context.Context, url string, requestBody interface{}, responseBody interface{}) error {
-	request, err := c.createRequest(ctx, "POST", url, requestBody)
+	method := "POST"
+	request, err := c.createRequest(ctx, method, url, requestBody)
 	if err != nil {
 		return err
 	}
@@ -91,9 +111,29 @@ func (c *Client) setHeaders(req *corehttp.Request) {
 	}
 }
 
+func (c *Client) logNewRequest(method string, url string) {
+	if c.logging {
+		log.Printf("Outgoing request to [%s][%s] \n", method, url)
+	}
+}
+
+func (c *Client) logFinishedRequest(method string, url string, elapsed time.Duration, response *corehttp.Response) {
+	if !c.logging {
+		return
+	}
+	if response != nil && response.StatusCode >= 400 {
+		log.Printf("Outgoing request to [%s] [%s] failed with status [%d] in [%s] \n", method, url, response.StatusCode, elapsed.String())
+	} else {
+		log.Printf("Outgoing request to [%s] [%s] completed in [%s] \n", method, url, elapsed.String())
+	}
+}
+
 func (c *Client) executeWithRetry(request *corehttp.Request) (*corehttp.Response, error) {
 	response, err := c.retry.Execute(func() (*corehttp.Response, error) {
+		startTime := time.Now()
+		c.logNewRequest(request.Method, request.URL.String())
 		response, err := c.client.Do(request)
+		c.logFinishedRequest(request.Method, request.URL.String(), time.Now().Sub(startTime), response)
 		if shouldRetry(response, err) {
 			return response, &retry.RetryableError{Err: err}
 		}

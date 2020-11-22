@@ -11,6 +11,7 @@ import (
 
 type ClientConfig struct {
 	Timeout       time.Duration
+	Logging       bool
 	Url           url.URL
 	RetriesConfig retry.RetriesConfig
 }
@@ -23,6 +24,7 @@ type Client struct {
 func NewClient(config ClientConfig) (*Client, error) {
 	client, err := http.NewClient(http.ClientConfig{
 		Timeout: config.Timeout,
+		Logging: config.Logging,
 		Retries: config.RetriesConfig,
 		Headers: http.Headers{
 			"Content-Type": "application/json",
