@@ -29,7 +29,7 @@ func main() {
 		log.Panicf(err.Error())
 	} else {
 		log.Printf("Items: %+v", items)
-		item, err := inventoryClient.GetItem(context.Background(), 99)
+		item, err := inventoryClient.GetItem(context.Background(), items[0].Id)
 		if err != nil {
 			log.Panicf(err.Error())
 		} else {

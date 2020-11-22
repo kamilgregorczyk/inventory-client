@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	corehttp "net/http"
 	"test2/http/retry"
@@ -39,65 +38,85 @@ func NewClient(config ClientConfig) (*Client, error) {
 }
 
 func (c *Client) Get(ctx context.Context, url string, model interface{}) error {
-	response, err := c.execute(ctx, "GET", url, nil)
+	request, err := c.createRequest(ctx, "GET", url, nil)
 	if err != nil {
-		return &ClientError{Message: "network error", Url: url, Err: err}
+		return err
 	}
-	defer response.Body.Close()
+
+	response, err := c.executeWithRetry(request)
+	if err != nil {
+		return err
+	}
+
 	return readResponse(response, err, url, model)
 }
 
-func (c *Client) Post(ctx context.Context, url string, body interface{}, model interface{}) error {
-	response, err := c.execute(ctx, "POST", url, body)
+func (c *Client) Post(ctx context.Context, url string, requestBody interface{}, responseBody interface{}) error {
+	request, err := c.createRequest(ctx, "POST", url, requestBody)
 	if err != nil {
-		return &ClientError{Message: "network error", Url: url, Err: err}
+		return err
 	}
-	defer response.Body.Close()
-	return readResponse(response, err, url, model)
+
+	response, err := c.executeWithRetry(request)
+	if err != nil {
+		return err
+	}
+
+	return readResponse(response, err, url, responseBody)
 }
 
-func (c *Client) execute(context context.Context, method string, url string, body interface{}) (resp *corehttp.Response, err error) {
-	marshaledBody, err := json.Marshal(body)
+func (c *Client) createRequest(context context.Context, method string, url string, requestBody interface{}) (resp *corehttp.Request, err error) {
+	marshaledBody, err := json.Marshal(requestBody)
 
 	if err != nil {
-		return nil, fmt.Errorf("marshal error on url %s %w", url, err)
+		return nil, &ClientError{Message: "body parse error", Url: url, Err: err}
 	}
 
 	req, err := corehttp.NewRequestWithContext(context, method, url, bytes.NewBuffer(marshaledBody))
 	if err != nil {
 		return nil, &ClientError{Message: "network error", Url: url, Err: err}
 	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Accept", "application/json")
-	return c.executeWithRetry(req)
+	c.setHeaders(req)
+	return req, nil
 }
 
-func (c *Client) executeWithRetry(req *corehttp.Request) (*corehttp.Response, error) {
-	return c.retry.Execute(func() (*corehttp.Response, error) {
-		response, err := c.client.Do(req)
-		if shouldRetry(response) {
+func (c *Client) setHeaders(req *corehttp.Request) {
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+}
+
+func (c *Client) executeWithRetry(request *corehttp.Request) (*corehttp.Response, error) {
+	response, err := c.retry.Execute(func() (*corehttp.Response, error) {
+		response, err := c.client.Do(request)
+		if shouldRetry(response, err) {
 			return response, &retry.RetryableError{Err: err}
 		}
 		return response, err
 	})
-}
 
-func shouldRetry(response *corehttp.Response) bool {
-	return response == nil || response.StatusCode >= 500
-}
-
-func readResponse(response *corehttp.Response, err error, url string, model interface{}) error {
-	buffer, err := ioutil.ReadAll(response.Body)
-
-	if response.StatusCode >= 400 || response.StatusCode < 200 {
-		return &ClientHttpError{ResponseBody: buffer, Url: url, StatusCode: response.StatusCode}
+	if err != nil {
+		return response, &ClientError{Message: "network error", Url: request.URL.String(), Err: err}
 	}
+	if response != nil && response.StatusCode >= 400 {
+		return response, &ClientHttpError{Url: request.URL.String(), StatusCode: response.StatusCode}
+	}
+
+	return response, nil
+}
+
+func shouldRetry(response *corehttp.Response, err error) bool {
+	return err != nil || response == nil || response.StatusCode >= 500
+}
+
+func readResponse(response *corehttp.Response, err error, url string, responseBody interface{}) error {
+	buffer, err := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
 
 	if err != nil {
 		return &ClientError{Message: "io error", Url: url, Err: err}
 	}
 
-	err = json.Unmarshal(buffer, model)
+	err = json.Unmarshal(buffer, responseBody)
 	if err != nil {
 		return &ClientError{Message: "parsing error", Url: url, Err: err}
 	}
