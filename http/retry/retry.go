@@ -56,7 +56,7 @@ func (r *Retry) Execute(runnable RetryFunc) (*http.Response, error) {
 }
 
 func (r *Retry) next(currentTry int) time.Duration {
-	delay := r.config.Delay.Nanoseconds() * int64(math.Pow(r.config.Factor, float64(currentTry)))
+	delay := math.Abs(float64(r.config.Delay.Nanoseconds()) * (math.Pow(r.config.Factor, float64(currentTry)) - 1.0))
 	return time.Duration(delay)
 
 }

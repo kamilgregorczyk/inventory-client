@@ -25,7 +25,7 @@ func TestNewRetriesWithValidConfig(t *testing.T) {
 }
 
 func TestNewRetriesWithInValidConfig(t *testing.T) {
-	configs := []struct {
+	testCases := []struct {
 		MaxRetries    int
 		Delay         time.Duration
 		Factor        float64
@@ -38,19 +38,19 @@ func TestNewRetriesWithInValidConfig(t *testing.T) {
 		{MaxRetries: 1, Delay: time.Second, Factor: 0, ExpectedError: FactorZeroError},
 		{MaxRetries: 1, Delay: time.Second, Factor: -1.0, ExpectedError: FactorZeroError},
 	}
-	for _, test := range configs {
-		t.Logf("Given invalid RetriesConfig maxRetries=%d delay=%s factor=%0.2f", test.MaxRetries, test.Delay, test.Factor)
+	for _, testCase := range testCases {
+		t.Logf("Given invalid RetriesConfig maxRetries=%d delay=%s factor=%0.2f", testCase.MaxRetries, testCase.Delay, testCase.Factor)
 		config := RetriesConfig{
-			MaxRetries: test.MaxRetries,
-			Delay:      test.Delay,
-			Factor:     test.Factor,
+			MaxRetries: testCase.MaxRetries,
+			Delay:      testCase.Delay,
+			Factor:     testCase.Factor,
 		}
 
 		t.Logf("When creating Retry")
 		retry, err := NewRetries(config)
 
-		t.Logf("Should return '%s' error", test.ExpectedError)
-		assert.EqualError(t, err, test.ExpectedError.Error())
+		t.Logf("Should return '%s' error", testCase.ExpectedError)
+		assert.EqualError(t, err, testCase.ExpectedError.Error())
 		assert.Nil(t, retry)
 	}
 }
@@ -149,11 +149,47 @@ func TestRetryWithConstantFailures(t *testing.T) {
 	response, err := retry.Execute(funcToRetry)
 
 	t.Logf("Should call function %d times and return errors", 4)
-	if callCount != 4 {
-		t.Errorf("Func should be called %d was called %d times", 4, callCount)
-	}
 	assert.Equal(t, callCount, 4)
 	assert.NotNil(t, err)
 	assert.Equal(t, &expectedResponse, response)
+}
 
+func TestExponentialBackoff(t *testing.T) {
+	testCases := []struct {
+		MaxRetries    int
+		Delay         time.Duration
+		Factor        float64
+		RetryCount    int
+		ExpectedDelay time.Duration
+	}{
+
+		{MaxRetries: 3, Delay: time.Second, Factor: 2.0, RetryCount: 1, ExpectedDelay: time.Second * 1},
+		{MaxRetries: 3, Delay: time.Second, Factor: 2.0, RetryCount: 2, ExpectedDelay: time.Second * 3},
+		{MaxRetries: 3, Delay: time.Second, Factor: 2.0, RetryCount: 3, ExpectedDelay: time.Second * 7},
+
+		{MaxRetries: 3, Delay: time.Second, Factor: 1.5, RetryCount: 1, ExpectedDelay: time.Millisecond * 500},
+		{MaxRetries: 3, Delay: time.Second, Factor: 1.5, RetryCount: 2, ExpectedDelay: time.Second*1 + time.Millisecond*250},
+		{MaxRetries: 3, Delay: time.Second, Factor: 1.5, RetryCount: 3, ExpectedDelay: time.Second*2 + time.Millisecond*375},
+
+		{MaxRetries: 3, Delay: time.Second, Factor: 1.6, RetryCount: 1, ExpectedDelay: time.Millisecond * 600},
+		{MaxRetries: 3, Delay: time.Second, Factor: 1.5, RetryCount: 1, ExpectedDelay: time.Millisecond * 500},
+		{MaxRetries: 3, Delay: time.Second, Factor: 0.5, RetryCount: 1, ExpectedDelay: time.Millisecond * 500},
+	}
+
+	for _, testCase := range testCases {
+		t.Logf("Given valid RetriesConfig maxRetries=%d delay=%s factor=%0.2f", testCase.MaxRetries, testCase.Delay, testCase.Factor)
+		config := RetriesConfig{
+			MaxRetries: testCase.MaxRetries,
+			Delay:      testCase.Delay,
+			Factor:     testCase.Factor,
+		}
+		t.Logf("And given Retry")
+		retry, _ := NewRetries(config)
+
+		t.Logf("When calculating backoff")
+		delay := retry.next(testCase.RetryCount)
+
+		t.Logf("Delay should be %s", testCase.ExpectedDelay.String())
+		assert.Equal(t, testCase.ExpectedDelay, delay)
+	}
 }
