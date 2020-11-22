@@ -66,6 +66,11 @@ func NewClient(config ClientConfig) (*Client, error) {
 	}, nil
 }
 
+// Runs GET HTTP query for provided url, responseBody (pointer) will be written by json.Unmarshal.
+//
+// In case of network, parsing or io error (non http related) it will return ClientError.
+//
+// In case of an http related error (>400 status code) it will return ClientHttpError along with returned status code.
 func (c *Client) Get(ctx context.Context, url string, responseBody interface{}) error {
 	method := "GET"
 	request, err := c.createRequest(ctx, method, url, nil)
@@ -81,6 +86,11 @@ func (c *Client) Get(ctx context.Context, url string, responseBody interface{}) 
 	return readResponse(response, err, url, responseBody)
 }
 
+// Runs GET HTTP query for provided url, responseBody (pointer) will be written by json.Unmarshal.
+//
+// In case of network, parsing or io error (non http related) it will return ClientError.
+//
+// In case of an http related error (>400 status code) it will return ClientHttpError along with returned status code.
 func (c *Client) Delete(ctx context.Context, url string, responseBody interface{}) error {
 	method := "DELETE"
 	request, err := c.createRequest(ctx, method, url, nil)
@@ -96,6 +106,11 @@ func (c *Client) Delete(ctx context.Context, url string, responseBody interface{
 	return readResponse(response, err, url, responseBody)
 }
 
+// Runs GET HTTP query for provided url, responseBody (pointer) will be written by json.Unmarshal.
+//
+// In case of network, parsing or io error (non http related) it will return ClientError.
+//
+// In case of an http related error (>400 status code) it will return ClientHttpError along with returned status code.
 func (c *Client) Post(ctx context.Context, url string, requestBody interface{}, responseBody interface{}) error {
 	method := "POST"
 	request, err := c.createRequest(ctx, method, url, requestBody)
