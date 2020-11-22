@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	TimeoutBellowZeroError = errors.New("timeout has to be larger than 0ms")
+	TimeoutZeroError = errors.New("timeout has to be larger than 0ms")
 )
 
 type ClientError struct {

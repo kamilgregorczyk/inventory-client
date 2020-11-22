@@ -26,7 +26,7 @@ type Headers map[string]string
 
 func NewClient(config ClientConfig) (*Client, error) {
 	if config.Timeout.Milliseconds() <= 0 {
-		return nil, TimeoutBellowZeroError
+		return nil, TimeoutZeroError
 	}
 
 	retry, err := retry.NewRetries(config.Retries)

@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61055360-fe20-436b-afb1-1f984888be4f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/http/client_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventory/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/inventory/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/errors.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +60,16 @@
       <recent name="$PROJECT_DIR$/client" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestExponentialBackoff in test2/http/retry">
+  <component name="RunManager" selected="Go Test.go test test2/http">
+    <configuration name="go build test2" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="test2" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="test2" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestExponentialBackoff in test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="test2" />
       <working_directory value="$PROJECT_DIR$/http/retry" />
@@ -71,56 +81,45 @@
       <pattern value="^\QTestExponentialBackoff\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestNewRetriesWithInValidConfig in test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestNewClient in test2/http" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="test2" />
-      <working_directory value="$PROJECT_DIR$/http/retry" />
+      <working_directory value="$PROJECT_DIR$/http" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="test2/http/retry" />
+      <package value="test2/http" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestNewRetriesWithInValidConfig\E$" />
+      <pattern value="^\QTestNewClient\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestNewRetriesWithValidConfig in test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestNewClientWithInValidConfig in test2/http" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="test2" />
-      <working_directory value="$PROJECT_DIR$/http/retry" />
+      <working_directory value="$PROJECT_DIR$/http" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="test2/http/retry" />
+      <package value="test2/http" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestNewRetriesWithValidConfig\E$" />
+      <pattern value="^\QTestNewClientWithInValidConfig\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestRetryExponentialBackoff in test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="go test test2/http" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="test2" />
-      <working_directory value="$PROJECT_DIR$/http/retry" />
+      <working_directory value="$PROJECT_DIR$/http" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="test2/http/retry" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestRetryExponentialBackoff\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go test test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="test2" />
-      <working_directory value="$PROJECT_DIR$/http/retry" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="test2/http/retry" />
+      <package value="test2/http" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.go test test2/http" />
+        <item itemvalue="Go Test.TestNewClientWithInValidConfig in test2/http" />
+        <item itemvalue="Go Test.TestNewClient in test2/http" />
+        <item itemvalue="Go Build.go build test2" />
         <item itemvalue="Go Test.TestExponentialBackoff in test2/http/retry" />
-        <item itemvalue="Go Test.TestRetryExponentialBackoff in test2/http/retry" />
-        <item itemvalue="Go Test.go test test2/http/retry" />
-        <item itemvalue="Go Test.TestNewRetriesWithInValidConfig in test2/http/retry" />
-        <item itemvalue="Go Test.TestNewRetriesWithValidConfig in test2/http/retry" />
       </list>
     </recent_temporary>
   </component>
@@ -144,29 +143,29 @@
     </state>
     <state x="1006" y="318" width="1132" height="577" key="#xdebugger.evaluate/0.25.2944.1667@0.25.2944.1667" timestamp="1606056580303" />
     <state x="371" y="556" width="950" height="585" key="#xdebugger.evaluate/0.25.2948.1667@0.25.2948.1667" timestamp="1605826872951" />
-    <state width="1775" height="518" key="GridCell.Tab.0.bottom" timestamp="1606057502503">
+    <state width="2496" height="518" key="GridCell.Tab.0.bottom" timestamp="1606058779121">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.bottom/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="1775" height="518" key="GridCell.Tab.0.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1606057502503" />
+    <state width="2496" height="518" key="GridCell.Tab.0.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1606058779121" />
     <state width="1823" height="489" key="GridCell.Tab.0.bottom/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="1775" height="518" key="GridCell.Tab.0.center" timestamp="1606057502502">
+    <state width="2496" height="518" key="GridCell.Tab.0.center" timestamp="1606058779120">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.center/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="1775" height="518" key="GridCell.Tab.0.center/0.25.2944.1667@0.25.2944.1667" timestamp="1606057502502" />
+    <state width="2496" height="518" key="GridCell.Tab.0.center/0.25.2944.1667@0.25.2944.1667" timestamp="1606058779120" />
     <state width="1823" height="489" key="GridCell.Tab.0.center/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="1775" height="518" key="GridCell.Tab.0.left" timestamp="1606057502502">
+    <state width="2496" height="518" key="GridCell.Tab.0.left" timestamp="1606058779120">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.left/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="1775" height="518" key="GridCell.Tab.0.left/0.25.2944.1667@0.25.2944.1667" timestamp="1606057502502" />
+    <state width="2496" height="518" key="GridCell.Tab.0.left/0.25.2944.1667@0.25.2944.1667" timestamp="1606058779120" />
     <state width="1823" height="489" key="GridCell.Tab.0.left/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="1775" height="518" key="GridCell.Tab.0.right" timestamp="1606057502503">
+    <state width="2496" height="518" key="GridCell.Tab.0.right" timestamp="1606058779121">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.right/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="1775" height="518" key="GridCell.Tab.0.right/0.25.2944.1667@0.25.2944.1667" timestamp="1606057502503" />
+    <state width="2496" height="518" key="GridCell.Tab.0.right/0.25.2944.1667@0.25.2944.1667" timestamp="1606058779121" />
     <state width="1823" height="489" key="GridCell.Tab.0.right/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
     <state width="1775" height="470" key="GridCell.Tab.1.bottom" timestamp="1606056999722">
       <screen x="0" y="25" width="2944" height="1667" />
