@@ -29,6 +29,9 @@ type RetriesConfig struct {
 }
 
 // Constructs new Retry from RetriesConfig
+// If RetriesConfig.MaxRetries is zero or below, it returns MaxRetriesZeroError
+// If RetriesConfig.Delay is zero or below, it returns DelayZeroError
+// If RetriesConfig.Factor is zero or below, it returns FactorZeroError
 func NewRetries(config RetriesConfig) (*Retry, error) {
 	if config.MaxRetries <= 0 {
 		return nil, MaxRetriesZeroError
@@ -43,12 +46,20 @@ func NewRetries(config RetriesConfig) (*Retry, error) {
 	return &Retry{config: config}, nil
 }
 
+// Constructed with NewRetry, contains Execute function for running HTTP requests with retries
 type Retry struct {
 	config RetriesConfig
 }
 
 type RetryFunc func() (*http.Response, error)
 
+// Runs HTTP requests with retries
+// In order for Execute to run again provided RetryFunc, the caller has to return RetryableError,
+// otherwise the execution will be treated as successfully no matter it error of other type is returned or not
+// (as some errors are not worth to retry)
+//
+// The delay between retries is calculated based on a simple exponential-backoff equation: delay * factor^currentTry
+// Providing delay of 1 second, factor 2.0  and maximum number of retires will retry in 1s, 3s and 7s of delay between runs
 func (r *Retry) Execute(runnable RetryFunc) (*http.Response, error) {
 	var tryCount int
 	for {

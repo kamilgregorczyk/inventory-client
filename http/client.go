@@ -1,3 +1,14 @@
+// Provides an HTTP client, an abstraction over go's built in http client.
+// It simplifies making http requests by doing boilerplate logic, serialising & deserializing JSON responses
+// and by encapsulating all the errors that can happen along the way under once common format.
+//
+// The NewClient function creates a new instance of the Client by providing ClientConfig.
+// It is required to pass all the fields from that config
+//
+// For the time being it only provides GET, POST and DELETE operations.
+//
+//
+//
 package http
 
 import (
@@ -27,6 +38,16 @@ type Client struct {
 
 type Headers map[string]string
 
+// Creates a new instance of the Client
+//
+// If ClientConfig.Timeout is zero or bellow it returns TimeoutZeroError.
+//
+// If ClientConfig.RetriesConfig has any errors, those will be also returned to the caller,
+// not providing those values is not possible as retries are required on all of the endpoints
+//
+// If Headers won't be empty, all the headers will be set on every outgoing http request
+//
+// If Logging is enabled, every outgoing request will be logged along with its execution time, including retries
 func NewClient(config ClientConfig) (*Client, error) {
 	if config.Timeout.Milliseconds() <= 0 {
 		return nil, TimeoutZeroError
@@ -45,7 +66,7 @@ func NewClient(config ClientConfig) (*Client, error) {
 	}, nil
 }
 
-func (c *Client) Get(ctx context.Context, url string, model interface{}) error {
+func (c *Client) Get(ctx context.Context, url string, responseBody interface{}) error {
 	method := "GET"
 	request, err := c.createRequest(ctx, method, url, nil)
 	if err != nil {
@@ -57,10 +78,10 @@ func (c *Client) Get(ctx context.Context, url string, model interface{}) error {
 		return err
 	}
 
-	return readResponse(response, err, url, model)
+	return readResponse(response, err, url, responseBody)
 }
 
-func (c *Client) Delete(ctx context.Context, url string, model interface{}) error {
+func (c *Client) Delete(ctx context.Context, url string, responseBody interface{}) error {
 	method := "DELETE"
 	request, err := c.createRequest(ctx, method, url, nil)
 	if err != nil {
@@ -72,7 +93,7 @@ func (c *Client) Delete(ctx context.Context, url string, model interface{}) erro
 		return err
 	}
 
-	return readResponse(response, err, url, model)
+	return readResponse(response, err, url, responseBody)
 }
 
 func (c *Client) Post(ctx context.Context, url string, requestBody interface{}, responseBody interface{}) error {

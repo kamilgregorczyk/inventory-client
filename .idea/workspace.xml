@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="61055360-fe20-436b-afb1-1f984888be4f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/http/retry/example_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/example_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/retry/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/retry/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/retry/example_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/retry/example_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/retry/retry.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/retry/retry.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,7 +50,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/http/retry" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/http" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
@@ -60,6 +62,7 @@
       <recent name="$PROJECT_DIR$/client" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/http" />
       <recent name="$PROJECT_DIR$/http/retry" />
       <recent name="$PROJECT_DIR$/inventoryclient" />
     </key>
@@ -222,10 +225,10 @@
     </state>
     <state x="1996" y="665" key="refactoring.ChangeSignatureDialog/0.0.3008.1692@0.0.3008.1692" timestamp="1606063329728" />
     <state x="1956" y="680" key="refactoring.ChangeSignatureDialog/0.25.2948.1667@0.25.2948.1667" timestamp="1605817888176" />
-    <state x="1869" y="410" width="672" height="678" key="search.everywhere.popup" timestamp="1606080924667">
+    <state x="1869" y="410" width="672" height="678" key="search.everywhere.popup" timestamp="1606081859543">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
-    <state x="1869" y="410" width="672" height="678" key="search.everywhere.popup/0.25.2944.1667@0.25.2944.1667" timestamp="1606080924667" />
+    <state x="1869" y="410" width="672" height="678" key="search.everywhere.popup/0.25.2944.1667@0.25.2944.1667" timestamp="1606081859543" />
     <state x="1872" y="410" width="672" height="678" key="search.everywhere.popup/0.25.2948.1667@0.25.2948.1667" timestamp="1605824181702" />
   </component>
   <component name="XDebuggerManager">
