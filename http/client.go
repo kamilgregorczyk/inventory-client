@@ -100,11 +100,12 @@ func (c *Client) executeWithRetry(request *corehttp.Request) (*corehttp.Response
 		return response, err
 	})
 
-	if err != nil {
-		return response, &ClientError{Message: "network error", Url: request.URL.String(), Err: err}
-	}
 	if response != nil && response.StatusCode >= 400 {
 		return response, &ClientHttpError{Url: request.URL.String(), StatusCode: response.StatusCode}
+	}
+
+	if err != nil {
+		return response, &ClientError{Message: "network error", Url: request.URL.String(), Err: err}
 	}
 
 	return response, nil

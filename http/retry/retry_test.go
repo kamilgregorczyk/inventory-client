@@ -20,7 +20,7 @@ func TestNewRetriesWithValidConfig(t *testing.T) {
 
 	t.Logf("Should not return any errors")
 
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.NotNil(t, retry)
 }
 
@@ -81,7 +81,7 @@ func TestRetryWithSuccessAtFirstTry(t *testing.T) {
 
 	t.Logf("Should call only once and not return any errors")
 	assert.Equal(t, callCount, 1)
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, &expectedResponse, response)
 }
 
@@ -118,7 +118,7 @@ func TestRetryWithInitialFailuresAndThenSuccess(t *testing.T) {
 
 		t.Logf("Should call function %d times and not return any errors", expectedCallCount)
 		assert.Equal(t, callCount, expectedCallCount)
-		assert.Nil(t, err)
+		assert.NoError(t, err)
 		assert.Equal(t, &expectedResponse, response)
 	}
 
@@ -150,7 +150,7 @@ func TestRetryWithConstantFailures(t *testing.T) {
 
 	t.Logf("Should call function %d times and return errors", 4)
 	assert.Equal(t, callCount, 4)
-	assert.NotNil(t, err)
+	assert.Error(t, err)
 	assert.Equal(t, &expectedResponse, response)
 }
 

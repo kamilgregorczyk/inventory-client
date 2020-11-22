@@ -24,11 +24,10 @@ func (e *ClientError) Unwrap() error {
 }
 
 type ClientHttpError struct {
-	Url          string
-	StatusCode   int
-	ResponseBody []byte
+	Url        string
+	StatusCode int
 }
 
 func (e *ClientHttpError) Error() string {
-	return fmt.Sprintf("failed to call %s due to HTTP error %d %s", e.Url, e.StatusCode, e.ResponseBody)
+	return fmt.Sprintf("failed to call %s due to HTTP error %d", e.Url, e.StatusCode)
 }
