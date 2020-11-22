@@ -1,7 +1,7 @@
 package retry
 
 import (
-	"errors"
+	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 	"time"
@@ -20,13 +20,8 @@ func TestNewRetriesWithValidConfig(t *testing.T) {
 
 	t.Logf("Should not return any errors")
 
-	if err != nil {
-		t.Errorf("Failed to create Retry")
-	}
-
-	if retry == nil {
-		t.Error("NewRetries didn't return Retry")
-	}
+	assert.Nil(t, err)
+	assert.NotNil(t, retry)
 }
 
 func TestNewRetriesWithInValidConfig(t *testing.T) {
@@ -55,13 +50,8 @@ func TestNewRetriesWithInValidConfig(t *testing.T) {
 		retry, err := NewRetries(config)
 
 		t.Logf("Should return '%s' error", test.ExpectedError)
-		if !errors.Is(err, test.ExpectedError) {
-			t.Errorf("Error returned is %s", err)
-		}
-		if retry != nil {
-			t.Errorf("Retry should not be returned when error occurs")
-
-		}
+		assert.EqualError(t, err, test.ExpectedError.Error())
+		assert.Nil(t, retry)
 	}
 }
 
@@ -90,17 +80,9 @@ func TestRetryWithSuccessAtFirstTry(t *testing.T) {
 	response, err := retry.Execute(funcToRetry)
 
 	t.Logf("Should call only once and not return any errors")
-	if callCount != 1 {
-		t.Errorf("Func should be called 1 was called %d times", callCount)
-	}
-
-	if err != nil {
-		t.Errorf("Error should not be returned with a successful retry")
-	}
-
-	if &expectedResponse != response {
-		t.Errorf("ExpectedResponse is not the response that should be returned")
-	}
+	assert.Equal(t, callCount, 1)
+	assert.Nil(t, err)
+	assert.Equal(t, &expectedResponse, response)
 }
 
 func TestRetryWithInitialFailuresAndThenSuccess(t *testing.T) {
@@ -135,17 +117,9 @@ func TestRetryWithInitialFailuresAndThenSuccess(t *testing.T) {
 		response, err := retry.Execute(funcToRetry)
 
 		t.Logf("Should call function %d times and not return any errors", expectedCallCount)
-		if callCount != expectedCallCount {
-			t.Errorf("Func should be called %d was called %d times", expectedCallCount, callCount)
-		}
-
-		if err != nil {
-			t.Errorf("Error should not be returned with a successful retry")
-		}
-
-		if &expectedResponse != response {
-			t.Errorf("ExpectedResponse is not the response that should be returned")
-		}
+		assert.Equal(t, callCount, expectedCallCount)
+		assert.Nil(t, err)
+		assert.Equal(t, &expectedResponse, response)
 	}
 
 }
@@ -178,18 +152,8 @@ func TestRetryWithConstantFailures(t *testing.T) {
 	if callCount != 4 {
 		t.Errorf("Func should be called %d was called %d times", 4, callCount)
 	}
-
-	if err == nil {
-		t.Errorf("Error be returned")
-	}
-
-	var expectedError *RetryableError
-	if !errors.As(err, &expectedError) {
-		t.Errorf("Error after failed attempts should be RetryableError")
-	}
-
-	if &expectedResponse != response {
-		t.Errorf("ExpectedResponse is not the response that should be returned")
-	}
+	assert.Equal(t, callCount, 4)
+	assert.NotNil(t, err)
+	assert.Equal(t, &expectedResponse, response)
 
 }

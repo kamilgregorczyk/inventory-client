@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61055360-fe20-436b-afb1-1f984888be4f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/http/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/retry/retry_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/retry/retry_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +40,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -58,7 +60,7 @@
       <recent name="$PROJECT_DIR$/client" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build test2">
+  <component name="RunManager" selected="Go Test.go test test2/http/retry">
     <configuration name="go build test2" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="test2" />
       <working_directory value="$PROJECT_DIR$" />
@@ -66,6 +68,28 @@
       <filePath value="$PROJECT_DIR$/main.go" />
       <package value="test2" />
       <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestNewRetriesWithInValidConfig in test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="test2" />
+      <working_directory value="$PROJECT_DIR$/http/retry" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="test2/http/retry" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestNewRetriesWithInValidConfig\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestNewRetriesWithValidConfig in test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="test2" />
+      <working_directory value="$PROJECT_DIR$/http/retry" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="test2/http/retry" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestNewRetriesWithValidConfig\E$" />
       <method v="2" />
     </configuration>
     <configuration name="TestRetryWithConstantFailures in test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -77,28 +101,6 @@
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <pattern value="^\QTestRetryWithConstantFailures\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestRetryWithInitialFailuresAndThenSuccess in test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="test2" />
-      <working_directory value="$PROJECT_DIR$/http/retry" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="test2/http/retry" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestRetryWithInitialFailuresAndThenSuccess\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestRetryWithSuccessAtFirstTry in test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="test2" />
-      <working_directory value="$PROJECT_DIR$/http/retry" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="test2/http/retry" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestRetryWithSuccessAtFirstTry\E$" />
       <method v="2" />
     </configuration>
     <configuration name="go test test2/http/retry" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -113,17 +115,20 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build test2" />
         <item itemvalue="Go Test.go test test2/http/retry" />
+        <item itemvalue="Go Test.TestNewRetriesWithInValidConfig in test2/http/retry" />
+        <item itemvalue="Go Test.TestNewRetriesWithValidConfig in test2/http/retry" />
+        <item itemvalue="Go Build.go build test2" />
         <item itemvalue="Go Test.TestRetryWithConstantFailures in test2/http/retry" />
-        <item itemvalue="Go Test.TestRetryWithSuccessAtFirstTry in test2/http/retry" />
-        <item itemvalue="Go Test.TestRetryWithInitialFailuresAndThenSuccess in test2/http/retry" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -138,29 +143,29 @@
     </state>
     <state x="1201" y="1032" width="1132" height="577" key="#xdebugger.evaluate/0.25.2944.1667@0.25.2944.1667" timestamp="1606049546062" />
     <state x="371" y="556" width="950" height="585" key="#xdebugger.evaluate/0.25.2948.1667@0.25.2948.1667" timestamp="1605826872951" />
-    <state width="2441" height="477" key="GridCell.Tab.0.bottom" timestamp="1606053911309">
+    <state width="1835" height="477" key="GridCell.Tab.0.bottom" timestamp="1606054677051">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.bottom/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="2441" height="477" key="GridCell.Tab.0.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1606053911309" />
+    <state width="1835" height="477" key="GridCell.Tab.0.bottom/0.25.2944.1667@0.25.2944.1667" timestamp="1606054677051" />
     <state width="1823" height="489" key="GridCell.Tab.0.bottom/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="2441" height="477" key="GridCell.Tab.0.center" timestamp="1606053911308">
+    <state width="1835" height="477" key="GridCell.Tab.0.center" timestamp="1606054677051">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.center/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="2441" height="477" key="GridCell.Tab.0.center/0.25.2944.1667@0.25.2944.1667" timestamp="1606053911308" />
+    <state width="1835" height="477" key="GridCell.Tab.0.center/0.25.2944.1667@0.25.2944.1667" timestamp="1606054677051" />
     <state width="1823" height="489" key="GridCell.Tab.0.center/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="2441" height="477" key="GridCell.Tab.0.left" timestamp="1606053911308">
+    <state width="1835" height="477" key="GridCell.Tab.0.left" timestamp="1606054677050">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.left/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="2441" height="477" key="GridCell.Tab.0.left/0.25.2944.1667@0.25.2944.1667" timestamp="1606053911308" />
+    <state width="1835" height="477" key="GridCell.Tab.0.left/0.25.2944.1667@0.25.2944.1667" timestamp="1606054677050" />
     <state width="1823" height="489" key="GridCell.Tab.0.left/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
-    <state width="2441" height="477" key="GridCell.Tab.0.right" timestamp="1606053911308">
+    <state width="1835" height="477" key="GridCell.Tab.0.right" timestamp="1606054677051">
       <screen x="0" y="25" width="2944" height="1667" />
     </state>
     <state width="1435" height="492" key="GridCell.Tab.0.right/0.23.2954.1669@0.23.2954.1669" timestamp="1605633085302" />
-    <state width="2441" height="477" key="GridCell.Tab.0.right/0.25.2944.1667@0.25.2944.1667" timestamp="1606053911308" />
+    <state width="1835" height="477" key="GridCell.Tab.0.right/0.25.2944.1667@0.25.2944.1667" timestamp="1606054677051" />
     <state width="1823" height="489" key="GridCell.Tab.0.right/0.25.2948.1667@0.25.2948.1667" timestamp="1605827571302" />
     <state width="2441" height="470" key="GridCell.Tab.1.bottom" timestamp="1606049572777">
       <screen x="0" y="25" width="2944" height="1667" />
